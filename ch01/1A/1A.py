@@ -4,7 +4,6 @@
 
 """
 import argparse
-import typing
 
 def parse_arguments() -> argparse.Namespace:
     """parse arguments
@@ -34,7 +33,7 @@ def parse_file(filename: str) -> tuple:
         pattern = lines[1].strip()
     return (txt, pattern)
 
-def PatternCount(txt: str, pattern: str) -> int:
+def pattern_count(txt: str, pattern: str) -> int:
     """count instances of pattern in txt
 
     Args:
@@ -68,7 +67,7 @@ def main():
     (txt, pattern) = parse_file(args.data_file)
     print(args.data_file, txt, pattern)
 
-    result = PatternCount(txt, pattern)
+    result = pattern_count(txt, pattern)
     print(f"count: {result}")
 
 if __name__ == "__main__":
