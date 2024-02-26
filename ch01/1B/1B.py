@@ -35,11 +35,11 @@ def parse_file(filename: str) -> tuple:
     return (txt, k)
 
 def frequency_words(txt: str, k: int) -> tuple:
-    """count instances of pattern in txt
+    """find most frequent instances of strings of length k (k-mers)
 
     Args:
         text (str): text to search
-        pattern (str): pattern to match
+        k (int): k-mer length
 
     Returns:
         tuple: most frequent k-mers
