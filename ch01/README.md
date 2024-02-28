@@ -4,3 +4,6 @@
 1D: start position of all occurences of a pattern in a string
 1E: Find all distinct k-mers forming (L,t)-clumps
 1F: find all locations n the genome minimizing skew (difference in G,C counts)
+1G: Hamming distance
+1H: approximate pattern matching
+1I: Frequent words w/ mismatches
