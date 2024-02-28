@@ -7,3 +7,4 @@
 1G: Hamming distance
 1H: approximate pattern matching
 1I: Frequent words w/ mismatches
+1J: Frequent words w/ mismatches (including reverse complement)
