@@ -40,44 +40,37 @@ def parse_file(filename: str) -> tuple:
         (k, interval_length, min_frequency) = (int(t) for t in tokens)
     return (genome, k, interval_length, min_frequency)
 
-def find_min_frequency_kmer(txt: str, k: int, min_freq: int) -> set:
-    """find strings of length k (k-mers) appearing at least a min # times
-
-    Args:
-        text (str): text to search
-        k (int): k-mer length
-        min_freq (int): minimum frequency
-
-    Returns:
-        set: most frequent k-mers
-    """
-    kmers = collections.defaultdict(int)
-    len_txt = len(txt)
-    for i in range(0,len_txt-k+1):
-        kmers[txt[i:i+k]] += 1
-
-    result = {key for key, value in kmers.items() if value >= min_freq}
-    return result
-
-def find_clumps(genome: str, k: int, interval_length: int, min_frequency: int) -> set:
-    """Find all distinct k-mers forming (L,t) clumps 
+def find_clumps_faster(genome: str, k: int, interval_length: int, min_frequency: int) -> set:
+    """Find all distinct k-mers forming (L,t) clumps
 
     Args:
         genome (str): genome
         k (int): k-mer length (k)
-        interval_length(int): interval length (L)
+        interval_length(int): inteerval length (L)
         min_freq (int): minimum frequency (t)
 
     Returns:
         set: all k-mers in any interval that appear in frequency >= t
     """
 
-    result = set()
-    for i in range(0, len(genome) - interval_length + 1):
-        this_result = find_min_frequency_kmer(genome[i:i+interval_length], k, min_frequency)
-        result.update(this_result)
+    # initialize k-mer count
+    kmers = collections.defaultdict(int)
+    for i in range(0,interval_length-k+1):
+        kmers[genome[i:i+k]] += 1
+    result = {key for key, value in kmers.items() if value >= min_frequency}
+
+    # iterate through the rest of the genome
+    # just need to modify kmers each time to account for the frame shift
+
+    for i in range(1, len(genome) - interval_length + 1):
+        first_pattern = genome[i-1:i-1+k]
+        kmers[first_pattern] -= 1
+        last_pattern = genome[i+interval_length-k:i+interval_length]
+        kmers[last_pattern] += 1
+        result.update({key for key, value in kmers.items() if value >= min_frequency})
 
     return result
+
 
 def main():
     """main
@@ -85,7 +78,7 @@ def main():
     args = parse_arguments()
     (genome, k, interval_length, min_frequency) = parse_file(args.data_file)
 
-    result = find_clumps(genome, k, interval_length, min_frequency)
+    result = find_clumps_faster(genome, k, interval_length, min_frequency)
     result = sorted(result)
     print(" ".join(result))
 
