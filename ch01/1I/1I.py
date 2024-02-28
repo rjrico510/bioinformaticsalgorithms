@@ -5,6 +5,7 @@
 """
 import argparse
 import collections
+import copy
 
 def parse_arguments() -> argparse.Namespace:
     """parse arguments
@@ -65,11 +66,15 @@ def neighbors(pattern: str, d: int) -> set:
     """
     NUCLEOTIDES = {"A", "C", "G", "T"}
 
-    if d == 0:
+    if d == 0: # only an exact match - just return the pattern
         return pattern
-    if len(pattern) == 1:
-        return NUCLEOTIDES
+    if len(pattern) == 1: # the pattern is only 1 base long and d > 0
+        return copy.deepcopy(NUCLEOTIDES)
     
+    # recursively find suffix strings with Hamming distance <= d
+    # For each suffix string 
+    # - prefix w/ all nucleotides if Hamming distance < d
+    # - prefix w/ only the 1st symbol of the original pattern id Hamming distance = d
     neighborhood = set()
     first_symbol = pattern[0]
     suffix_pattern = pattern[1:]
