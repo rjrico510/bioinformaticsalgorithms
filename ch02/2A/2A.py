@@ -108,12 +108,13 @@ def motif_enumeration(dna: list, k: int, d: int) -> set:
 
             for current_dna in dna[1:]:
                 match_current = False # assume there is no match for the current neighbor
-                
+
                 for i in range(0, len(current_dna) - k + 1):
                     hamming_distance = hamming(current_neighbor, current_dna[i:i+k])
                     if hamming_distance <= d:
                         match_current = True # found a match - can stop searching this string
                         break
+
                 if not match_current:  # current neighbor not in current DNA
                     match_all = False
                     break # no need to continue searching the remaining DNA for this neighbor
