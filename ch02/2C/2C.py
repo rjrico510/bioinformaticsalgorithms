@@ -75,7 +75,7 @@ def profile_most_probable(txt: str, k: int, profile: dict) -> set:
     result = set()
     probability = 0
     
-    for i in range(0, len(txt) - k):
+    for i in range(0, len(txt) - k + 1):
         kmer = txt[i:i+k]
         this_probability = compute_probability(kmer, profile)
         if this_probability > probability:
