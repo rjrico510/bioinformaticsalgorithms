@@ -1,0 +1,41 @@
+For this problem, running 50000 iterations on the sample dataset in the site (dataset01.txt)
+
+I get:
+CTCGGGGG
+CCAAGGTG
+TACAGGCG
+TTCAGGTG
+TCCACGTG
+
+The site lists a different set - specifically the 1st & last differ:
+TCTCGGGG
+CCAAGGTG
+TACAGGCG
+TTCAGGTG
+TCCACGTG
+
+(In general the results fluctuate if the random seed isn't set)
+
+
+For dataset02 (the dataset used to solve the problem) I get the "passing" answer on 1000 iterations regardless of seed
+
+CCAAACCTTAGATGG
+TAACGTATTAGGTTG
+TAAAAAATTAGGACT
+TAAAAAAGATGGTTG
+TAAAAACAAAGGTTG
+TAAAAAGGGAGGTTG
+TAAAAAATAGAGTTG
+TAAATTTTTAGGTTG
+TAAAAGTATAGGTTG
+TAAAAAATTCCTTTG
+TACTTAATTAGGTTG
+TCTTAAATTAGGTTG
+TAAAAAATTAATATG
+TAAACCTTTAGGTTG
+GCAAAAATTAGGTTC
+TAAAAAATTAGCAAG
+CAAAAAATTAGGTCT
+TAAAATCCTAGGTTG
+TAATGCATTAGGTTG
+AGTAAAATTAGGTTG
