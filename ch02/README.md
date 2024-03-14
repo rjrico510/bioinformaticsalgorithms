@@ -4,3 +4,4 @@
 2D: Greedy Motif Search
 2E: Greedy Motif Search with pseudocounts
 2F: Randomized motif search
+2G: Gibbs sampler
