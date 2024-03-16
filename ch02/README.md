@@ -5,4 +5,4 @@
 2E: Greedy Motif Search with pseudocounts
 2F: Randomized motif search
 2G: Gibbs sampler
-2H: Distance between patern & string
+2H: Distance between pattern & string
