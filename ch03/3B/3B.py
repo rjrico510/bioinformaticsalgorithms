@@ -1,8 +1,9 @@
-#/usr/bin/env python3
+# /usr/bin/env python3
 """Bioinformatics Algorithms Ch 03 Problem 2B
    String spelled by genome path
 """
 import argparse
+
 
 def parse_arguments() -> argparse.Namespace:
     """parse arguments
@@ -10,12 +11,11 @@ def parse_arguments() -> argparse.Namespace:
     Returns:
         argparse.Namespace: argument object
     """
-    parser = argparse.ArgumentParser(
-        description="String spelled by genome path"
-    )
+    parser = argparse.ArgumentParser(description="String spelled by genome path")
     parser.add_argument("data_file", help="input - k-mers in order")
     args = parser.parse_args()
     return args
+
 
 def parse_file(filename: str) -> tuple:
     """Parse file
@@ -29,7 +29,8 @@ def parse_file(filename: str) -> tuple:
     with open(filename) as f:
         lines = f.readlines()
         kmers = [line.strip() for line in lines]
-    return (kmers)
+    return kmers
+
 
 def spell_string(kmers: list) -> str:
     """given sequence of n k-mers where
@@ -47,14 +48,15 @@ def spell_string(kmers: list) -> str:
         result += kmers[i][-1]
     return result
 
+
 def main():
-    """main
-    """
+    """main"""
     args = parse_arguments()
     (kmers) = parse_file(args.data_file)
 
     result = spell_string(kmers)
     print(result)
+
 
 if __name__ == "__main__":
     main()

@@ -1,9 +1,10 @@
-#/usr/bin/env python3
+# /usr/bin/env python3
 """Bioinformatics Algorithms Ch 03 Problem 2A
    String composition problem (all k-mers in a string)
 """
 import argparse
 import sys
+
 
 def parse_arguments() -> argparse.Namespace:
     """parse arguments
@@ -17,6 +18,7 @@ def parse_arguments() -> argparse.Namespace:
     parser.add_argument("data_file", help="input - 1st line - k; 2nd line - string")
     args = parser.parse_args()
     return args
+
 
 def parse_file(filename: str) -> tuple:
     """Parse file
@@ -33,6 +35,7 @@ def parse_file(filename: str) -> tuple:
         txt = lines[1].strip()
     return (k, txt)
 
+
 def composition_k(k: int, txt: str) -> list:
     """find all k-mers in a string
 
@@ -44,19 +47,20 @@ def composition_k(k: int, txt: str) -> list:
         list: k-mers present in lexographic order
     """
     result = []
-    for i in range(0, len(txt) -k + 1):
-        result.append(txt[i:i+k])
+    for i in range(0, len(txt) - k + 1):
+        result.append(txt[i : i + k])
     result.sort()
     return result
 
+
 def main():
-    """main
-    """
+    """main"""
     args = parse_arguments()
     (k, txt) = parse_file(args.data_file)
 
     result = composition_k(k, txt)
     print("\n".join(result))
+
 
 if __name__ == "__main__":
     main()
