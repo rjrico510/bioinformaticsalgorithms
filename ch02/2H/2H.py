@@ -1,4 +1,4 @@
-#/usr/bin/env python3
+# /usr/bin/env python3
 """Bioinformatics Algorithms Ch 02 Problem 2H
    Distance between pattern & string
 
@@ -6,6 +6,7 @@
 """
 import argparse
 import sys
+
 
 def parse_arguments() -> argparse.Namespace:
     """parse arguments
@@ -16,9 +17,12 @@ def parse_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="find sum of hamming distances between a pattern & list of strings"
     )
-    parser.add_argument("data_file", help="input - 1st line - pattern; 2nd line - strings")
+    parser.add_argument(
+        "data_file", help="input - 1st line - pattern; 2nd line - strings"
+    )
     args = parser.parse_args()
     return args
+
 
 def parse_file(filename: str) -> tuple:
     """Parse file
@@ -34,6 +38,7 @@ def parse_file(filename: str) -> tuple:
         pattern = lines[0].strip()
         dna = lines[1].strip().split()
     return (pattern, dna)
+
 
 def hamming(str1: str, str2: str) -> int:
     """Find the Hamming distance between 2 strings of equal length
@@ -52,6 +57,7 @@ def hamming(str1: str, str2: str) -> int:
 
     return result
 
+
 def distance_between_strings(pattern, dna):
     """Total minimum hamming distance between a pattern and a list of DNA strings
 
@@ -67,7 +73,7 @@ def distance_between_strings(pattern, dna):
     for this_dna in dna:
         this_hd = sys.maxsize
         for i in range(0, len(this_dna) - k):
-            this_d = hamming(pattern, this_dna[i:i+k])
+            this_d = hamming(pattern, this_dna[i : i + k])
             # note - seems if this_d is ever 0 you could skip the rest of the kmers in this_dna
             if this_d < this_hd:
                 this_hd = this_d
@@ -75,14 +81,15 @@ def distance_between_strings(pattern, dna):
 
     return result
 
+
 def main():
-    """main
-    """
+    """main"""
     args = parse_arguments()
     (pattern, dna) = parse_file(args.data_file)
 
     result = distance_between_strings(pattern, dna)
     print(result)
+
 
 if __name__ == "__main__":
     main()

@@ -1,0 +1,6 @@
+final score 10 final frequency 3
+AACGGCCA
+AAGGTGCC
+AAGAAGTA
+CAGGTGCA
+CACGTGCA

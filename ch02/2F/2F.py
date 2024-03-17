@@ -1,4 +1,4 @@
-#/usr/bin/env python3
+# /usr/bin/env python3
 """Bioinformatics Algorithms Ch 02 Problem 2F
    Randomized motif search
 
@@ -7,7 +7,8 @@ import argparse
 import collections
 import random
 
-#random.seed(0) # make deterministic
+# random.seed(0) # make deterministic
+
 
 def parse_arguments() -> argparse.Namespace:
     """parse arguments
@@ -15,13 +16,19 @@ def parse_arguments() -> argparse.Namespace:
     Returns:
         argparse.Namespace: argument object
     """
-    parser = argparse.ArgumentParser(
-        description="Greedy motif search"
-    )
+    parser = argparse.ArgumentParser(description="Greedy motif search")
     parser.add_argument("data_file", help="input - 1st line - k t; rest - t strings")
-    parser.add_argument("-n", "--iterations", help="# iterations", type=int, default=1000, required=False)
+    parser.add_argument(
+        "-n",
+        "--iterations",
+        help="# iterations",
+        type=int,
+        default=1000,
+        required=False,
+    )
     args = parser.parse_args()
     return args
+
 
 def parse_file(filename: str) -> tuple:
     """Parse file
@@ -39,6 +46,7 @@ def parse_file(filename: str) -> tuple:
         dna = [line.strip().upper() for line in lines[1:]]
     return (dna, k, t)
 
+
 def compute_probability(kmer: str, profile: dict) -> float:
     """Compute k-mer probability from profile
 
@@ -51,10 +59,11 @@ def compute_probability(kmer: str, profile: dict) -> float:
     """
 
     result = 1.0
-    for i in range(0,len(kmer)):
+    for i in range(0, len(kmer)):
         result *= profile[kmer[i]][i]
 
     return result
+
 
 def profile_most_probable_first(txt: str, k: int, profile: dict) -> str:
     """Compute median string
@@ -71,15 +80,16 @@ def profile_most_probable_first(txt: str, k: int, profile: dict) -> str:
     """
     result = None
     probability = -1
-    
+
     for i in range(0, len(txt) - k + 1):
-        kmer = txt[i:i+k]
+        kmer = txt[i : i + k]
         this_probability = compute_probability(kmer, profile)
         if this_probability > probability:
             probability = this_probability
             result = kmer
-            
+
     return result
+
 
 def generate_profile_with_pseudocounts(motifs: list) -> dict:
     """Generate profile matrix
@@ -96,7 +106,7 @@ def generate_profile_with_pseudocounts(motifs: list) -> dict:
 
     count = dict(zip(BASES, [[], [], [], []]))
     for i in range(0, len(motifs[0])):
-        this_count = dict(zip(BASES, [1]*4))
+        this_count = dict(zip(BASES, [1] * 4))
         for j in range(0, n_motifs):
             key = motifs[j][i]
             this_count[key] += 1
@@ -105,7 +115,7 @@ def generate_profile_with_pseudocounts(motifs: list) -> dict:
 
     profile = {}
     for key in count:
-        profile[key] = [v/(2*n_motifs) for v in count[key]]
+        profile[key] = [v / (2 * n_motifs) for v in count[key]]
 
     return profile
 
@@ -130,7 +140,7 @@ def compute_score(motifs: list) -> int:
     n_motifs = len(motifs)
 
     for i in range(0, len(motifs[0])):
-        count = dict(zip(BASES, [0]*4))
+        count = dict(zip(BASES, [0] * 4))
         for j in range(0, n_motifs):
             key = motifs[j][i]
             count[key] += 1
@@ -139,9 +149,10 @@ def compute_score(motifs: list) -> int:
 
     return score
 
+
 def random_motif_search(dna: list, k: int, t: int) -> list:
     """Random motif search
-    
+
     Randomly select k-mers from dna -> initial motifs
     - Compute score
     - Create a profile
@@ -160,11 +171,11 @@ def random_motif_search(dna: list, k: int, t: int) -> list:
     best_motifs = []
     for dnai in dna:
         start = random.randrange(0, len_motif - k + 1)
-        best_motifs.append(dnai[start:start+k])
+        best_motifs.append(dnai[start : start + k])
     best_score = compute_score(best_motifs)
     profile = generate_profile_with_pseudocounts(best_motifs)
 
-    while(True):
+    while True:
         motifs = []
         for dnai in dna:
             motifs.append(profile_most_probable_first(dnai, k, profile))
@@ -180,10 +191,8 @@ def random_motif_search(dna: list, k: int, t: int) -> list:
     return best_motifs
 
 
-
 def main():
-    """main
-    """
+    """main"""
     args = parse_arguments()
     (dna, k, t) = parse_file(args.data_file)
 

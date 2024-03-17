@@ -1,4 +1,4 @@
-#/usr/bin/env python3
+# /usr/bin/env python3
 """Bioinformatics Algorithms Ch 02 Problem 2A
    Motif enumeration
 
@@ -6,6 +6,7 @@
 import argparse
 import collections
 import copy
+
 
 def parse_arguments() -> argparse.Namespace:
     """parse arguments
@@ -16,9 +17,12 @@ def parse_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="find all (k,d)-motifs from a list of DNA strings"
     )
-    parser.add_argument("data_file", help="input - 1st line - k d; remaining lines - DNA")
+    parser.add_argument(
+        "data_file", help="input - 1st line - k d; remaining lines - DNA"
+    )
     args = parser.parse_args()
     return args
+
 
 def parse_file(filename: str) -> tuple:
     """Parse file
@@ -33,8 +37,9 @@ def parse_file(filename: str) -> tuple:
         lines = f.readlines()
         tokens = lines[0].strip().split()
         (k, d) = (int(t) for t in tokens)
-        dna = [line.strip() for line in lines [1:]]
+        dna = [line.strip() for line in lines[1:]]
     return (dna, k, d)
+
 
 def hamming(str1: str, str2: str) -> int:
     """Find the Hamming distance between 2 strings of equal length
@@ -53,6 +58,7 @@ def hamming(str1: str, str2: str) -> int:
 
     return result
 
+
 def neighbors(pattern: str, d: int) -> set:
     """Given a pattern, find all strings matching with Hamming distance <= d
     Recursive function
@@ -66,13 +72,13 @@ def neighbors(pattern: str, d: int) -> set:
     """
     NUCLEOTIDES = {"A", "C", "G", "T"}
 
-    if d == 0: # only an exact match - just return the pattern
+    if d == 0:  # only an exact match - just return the pattern
         return pattern
-    if len(pattern) == 1: # the pattern is only 1 base long and d > 0
+    if len(pattern) == 1:  # the pattern is only 1 base long and d > 0
         return copy.deepcopy(NUCLEOTIDES)
-    
+
     # recursively find suffix strings with Hamming distance <= d
-    # For each suffix string 
+    # For each suffix string
     # - prefix w/ all nucleotides if Hamming distance < d
     # - prefix w/ only the 1st symbol of the original pattern id Hamming distance = d
     neighborhood = set()
@@ -85,6 +91,7 @@ def neighbors(pattern: str, d: int) -> set:
         else:
             neighborhood.add("".join([first_symbol, suffix_neighbor]))
     return neighborhood
+
 
 def motif_enumeration(dna: list, k: int, d: int) -> set:
     """Find all (k,d) motifs that appear in every DNA string
@@ -101,38 +108,44 @@ def motif_enumeration(dna: list, k: int, d: int) -> set:
     result = set()
 
     for i in range(0, len(dna[0]) - k + 1):
-        pattern = dna[0][i:i+k]
+        pattern = dna[0][i : i + k]
         current_neighbors = neighbors(pattern, d)
-        for current_neighbor in current_neighbors: # iterate through all the neighbors
-            match_all = True # assume the current neighbor is a match in all subsequent strings
+        for current_neighbor in current_neighbors:  # iterate through all the neighbors
+            match_all = (
+                True  # assume the current neighbor is a match in all subsequent strings
+            )
 
             for current_dna in dna[1:]:
-                match_current = False # assume there is no match for the current neighbor
+                match_current = (
+                    False  # assume there is no match for the current neighbor
+                )
 
                 for i in range(0, len(current_dna) - k + 1):
-                    hamming_distance = hamming(current_neighbor, current_dna[i:i+k])
+                    hamming_distance = hamming(current_neighbor, current_dna[i : i + k])
                     if hamming_distance <= d:
-                        match_current = True # found a match - can stop searching this string
+                        match_current = (
+                            True  # found a match - can stop searching this string
+                        )
                         break
 
                 if not match_current:  # current neighbor not in current DNA
                     match_all = False
-                    break # no need to continue searching the remaining DNA for this neighbor
+                    break  # no need to continue searching the remaining DNA for this neighbor
 
             if match_all:
                 result.add(current_neighbor)
-                
+
     return result
 
 
 def main():
-    """main
-    """
+    """main"""
     args = parse_arguments()
     (dna, k, d) = parse_file(args.data_file)
 
     result = motif_enumeration(dna, k, d)
     print(" ".join(result))
+
 
 if __name__ == "__main__":
     main()

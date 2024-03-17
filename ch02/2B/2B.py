@@ -1,4 +1,4 @@
-#/usr/bin/env python3
+# /usr/bin/env python3
 """Bioinformatics Algorithms Ch 02 Problem 2B
    Median string problem
 
@@ -8,6 +8,7 @@
 """
 import argparse
 import sys
+
 
 def parse_arguments() -> argparse.Namespace:
     """parse arguments
@@ -22,6 +23,7 @@ def parse_arguments() -> argparse.Namespace:
     args = parser.parse_args()
     return args
 
+
 def parse_file(filename: str) -> tuple:
     """Parse file
 
@@ -34,8 +36,9 @@ def parse_file(filename: str) -> tuple:
     with open(filename) as f:
         lines = f.readlines()
         k = int(lines[0].strip())
-        dna = [line.strip() for line in lines [1:]]
+        dna = [line.strip() for line in lines[1:]]
     return (k, dna)
+
 
 def hamming(str1: str, str2: str) -> int:
     """Find the Hamming distance between 2 strings of equal length
@@ -54,9 +57,10 @@ def hamming(str1: str, str2: str) -> int:
 
     return result
 
-def number_to_symbol(i:int) -> str:
+
+def number_to_symbol(i: int) -> str:
     """convert int [0-3] to [ACGT]
-    
+
     Args:
         i (int): [0-3]
 
@@ -66,7 +70,8 @@ def number_to_symbol(i:int) -> str:
     SYMBOLS = ["A", "C", "G", "T"]
     return SYMBOLS[i]
 
-def number_to_pattern(index: int, k:int) -> str:
+
+def number_to_pattern(index: int, k: int) -> str:
     """Convert integer index to pattern
 
     Args:
@@ -78,12 +83,12 @@ def number_to_pattern(index: int, k:int) -> str:
     """
     if k == 1:
         return number_to_symbol(index)
-    
+
     prefix_index = index // 4
     remainder = index % 4
     symbol = number_to_symbol(remainder)
     prefix_pattern = number_to_pattern(prefix_index, k - 1)
-    return  "".join([prefix_pattern, symbol])
+    return "".join([prefix_pattern, symbol])
 
 
 def distance_between_strings(pattern, dna):
@@ -101,7 +106,7 @@ def distance_between_strings(pattern, dna):
     for this_dna in dna:
         this_hd = sys.maxsize
         for i in range(0, len(this_dna) - k):
-            this_d = hamming(pattern, this_dna[i:i+k])
+            this_d = hamming(pattern, this_dna[i : i + k])
             # note - seems if this_d is ever 0 you could skip the rest of the kmers in this_dna
             if this_d < this_hd:
                 this_hd = this_d
@@ -130,9 +135,9 @@ def median_string(k: int, dna: list) -> set:
     result = None
     distance = sys.maxsize
 
-    for i in range(0, (4**k)-1):
+    for i in range(0, (4**k) - 1):
         pattern = number_to_pattern(i, k)
-        this_distance  = distance_between_strings(pattern, dna)
+        this_distance = distance_between_strings(pattern, dna)
         if distance > this_distance:
             result = set([pattern])
             distance = this_distance
@@ -143,13 +148,13 @@ def median_string(k: int, dna: list) -> set:
 
 
 def main():
-    """main
-    """
+    """main"""
     args = parse_arguments()
     (k, dna) = parse_file(args.data_file)
 
     result = median_string(k, dna)
     print(" ".join(result))
+
 
 if __name__ == "__main__":
     main()

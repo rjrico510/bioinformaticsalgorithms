@@ -1,4 +1,4 @@
-#/usr/bin/env python3
+# /usr/bin/env python3
 """Bioinformatics Algorithms Ch 02 Problem 2C
    Profile-most probable k-mer
 
@@ -8,18 +8,20 @@
 """
 import argparse
 
+
 def parse_arguments() -> argparse.Namespace:
     """parse arguments
 
     Returns:
         argparse.Namespace: argument object
     """
-    parser = argparse.ArgumentParser(
-        description=" Profile-most probable k-mer problem"
+    parser = argparse.ArgumentParser(description=" Profile-most probable k-mer problem")
+    parser.add_argument(
+        "data_file", help="input - 1st line - string; 2nd - k; next 4 - profile [ACGT]"
     )
-    parser.add_argument("data_file", help="input - 1st line - string; 2nd - k; next 4 - profile [ACGT]")
     args = parser.parse_args()
     return args
+
 
 def parse_file(filename: str) -> tuple:
     """Parse file
@@ -55,7 +57,7 @@ def compute_probability(kmer: str, profile: dict) -> float:
     """
 
     result = 1.0
-    for i in range(0,len(kmer)):
+    for i in range(0, len(kmer)):
         result *= profile[kmer[i]][i]
 
     return result
@@ -74,27 +76,27 @@ def profile_most_probable(txt: str, k: int, profile: dict) -> set:
     """
     result = set()
     probability = 0
-    
+
     for i in range(0, len(txt) - k + 1):
-        kmer = txt[i:i+k]
+        kmer = txt[i : i + k]
         this_probability = compute_probability(kmer, profile)
         if this_probability > probability:
             probability = this_probability
             result = set([kmer])
         elif this_probability == probability:
             result.add(kmer)
-            
+
     return result
 
 
 def main():
-    """main
-    """
+    """main"""
     args = parse_arguments()
     (txt, k, profile) = parse_file(args.data_file)
 
     result = profile_most_probable(txt, k, profile)
     print(" ".join(result))
+
 
 if __name__ == "__main__":
     main()

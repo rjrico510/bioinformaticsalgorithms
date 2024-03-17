@@ -1,4 +1,4 @@
-#/usr/bin/env python3
+# /usr/bin/env python3
 """Bioinformatics Algorithms Ch 02 Problem 2G
    Gibbs sampling motif search
 
@@ -8,19 +8,21 @@ import collections
 import copy
 import random
 
+
 def parse_arguments() -> argparse.Namespace:
     """parse arguments
 
     Returns:
         argparse.Namespace: argument object
     """
-    parser = argparse.ArgumentParser(
-        description="Greedy motif search"
-    )
+    parser = argparse.ArgumentParser(description="Greedy motif search")
     parser.add_argument("data_file", help="input - 1st line - k t n; rest - t strings")
-    parser.add_argument("-i", "--iterations", help="# iterations", type=int, default=20, required=False)
+    parser.add_argument(
+        "-i", "--iterations", help="# iterations", type=int, default=20, required=False
+    )
     args = parser.parse_args()
     return args
+
 
 def parse_file(filename: str) -> tuple:
     """Parse file
@@ -38,6 +40,7 @@ def parse_file(filename: str) -> tuple:
         dna = [line.strip().upper() for line in lines[1:]]
     return (dna, k, t, n)
 
+
 def compute_probability(kmer: str, profile: dict) -> float:
     """Compute k-mer probability from profile
 
@@ -50,10 +53,11 @@ def compute_probability(kmer: str, profile: dict) -> float:
     """
 
     result = 1.0
-    for i in range(0,len(kmer)):
+    for i in range(0, len(kmer)):
         result *= profile[kmer[i]][i]
 
     return result
+
 
 def profile_most_probable_first(txt: str, k: int, profile: dict) -> str:
     """Compute median string
@@ -70,15 +74,16 @@ def profile_most_probable_first(txt: str, k: int, profile: dict) -> str:
     """
     result = None
     probability = -1
-    
+
     for i in range(0, len(txt) - k + 1):
-        kmer = txt[i:i+k]
+        kmer = txt[i : i + k]
         this_probability = compute_probability(kmer, profile)
         if this_probability > probability:
             probability = this_probability
             result = kmer
-            
+
     return result
+
 
 def generate_profile_with_pseudocounts(motifs: list) -> dict:
     """Generate profile matrix
@@ -95,7 +100,7 @@ def generate_profile_with_pseudocounts(motifs: list) -> dict:
 
     count = dict(zip(BASES, [[], [], [], []]))
     for i in range(0, len(motifs[0])):
-        this_count = dict(zip(BASES, [1]*4))
+        this_count = dict(zip(BASES, [1] * 4))
         for j in range(0, n_motifs):
             key = motifs[j][i]
             this_count[key] += 1
@@ -104,7 +109,7 @@ def generate_profile_with_pseudocounts(motifs: list) -> dict:
 
     profile = {}
     for key in count:
-        profile[key] = [v/(2*n_motifs) for v in count[key]]
+        profile[key] = [v / (2 * n_motifs) for v in count[key]]
 
     return profile
 
@@ -129,7 +134,7 @@ def compute_score(motifs: list) -> int:
     n_motifs = len(motifs)
 
     for i in range(0, len(motifs[0])):
-        count = dict(zip(BASES, [0]*4))
+        count = dict(zip(BASES, [0] * 4))
         for j in range(0, n_motifs):
             key = motifs[j][i]
             count[key] += 1
@@ -154,15 +159,16 @@ def profile_randomly_generated_kmer(sequence: str, k: int, profile: dict) -> str
     probabilities = []
     n_choices = len(sequence) - k + 1
     for i in range(0, n_choices):
-        probabilities.append(compute_probability(sequence[i:i+k], profile))
+        probabilities.append(compute_probability(sequence[i : i + k], profile))
     index = random.choices(range(0, n_choices), probabilities)[0]
-    result = sequence[index:index+k]
+    result = sequence[index : index + k]
 
     return result
 
+
 def gibbs_sampler(dna: list, k: int, t: int, n: int) -> list:
     """Use Gibbs sampler to get best motifs
-    
+
     Randomly select k-mers from dna -> initial motifs
     - Compute score
     - Create a profile
@@ -184,15 +190,15 @@ def gibbs_sampler(dna: list, k: int, t: int, n: int) -> list:
     motifs = []
     for dnai in dna:
         start = random.randrange(0, len_motif - k + 1)
-        motifs.append(dnai[start:start+k])
-    
+        motifs.append(dnai[start : start + k])
+
     best_score = compute_score(motifs)
     best_motifs = copy.deepcopy(motifs)
 
     for j in range(n):
 
         i = random.randrange(0, t)
-        profile_motifs = motifs[:i] + motifs[i+1:]
+        profile_motifs = motifs[:i] + motifs[i + 1 :]
         profile = generate_profile_with_pseudocounts(profile_motifs)
         motifs[i] = profile_randomly_generated_kmer(dna[i], k, profile)
         score = compute_score(motifs)
@@ -204,10 +210,8 @@ def gibbs_sampler(dna: list, k: int, t: int, n: int) -> list:
     return best_motifs
 
 
-
 def main():
-    """main
-    """
+    """main"""
     args = parse_arguments()
     (dna, k, t, n) = parse_file(args.data_file)
 
