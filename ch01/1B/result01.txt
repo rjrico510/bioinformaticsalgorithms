@@ -1,0 +1,2 @@
+dataset01.txt ACGTTGCATGTCGCATGATGCATGAGAGCT 4
+result: {'GCAT', 'CATG'}

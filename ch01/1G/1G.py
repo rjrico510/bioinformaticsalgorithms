@@ -1,9 +1,10 @@
-#/usr/bin/env python3
+# /usr/bin/env python3
 """Bioinformatics Algorithms Ch 01 Problem 1G
    Find the Hamming distance between 2 strings
 
 """
 import argparse
+
 
 def parse_arguments() -> argparse.Namespace:
     """parse arguments
@@ -17,6 +18,7 @@ def parse_arguments() -> argparse.Namespace:
     parser.add_argument("data_file", help="2-line file - 1 per string")
     args = parser.parse_args()
     return args
+
 
 def parse_file(filename: str) -> tuple:
     """Parse file
@@ -32,6 +34,7 @@ def parse_file(filename: str) -> tuple:
         str1 = lines[0].strip()
         str2 = lines[1].strip()
     return (str1, str2)
+
 
 def hamming(str1: str, str2: str) -> int:
     """Find the Hamming distance between 2 strings of equal length
@@ -50,14 +53,15 @@ def hamming(str1: str, str2: str) -> int:
 
     return result
 
+
 def main():
-    """main
-    """
+    """main"""
     args = parse_arguments()
     (str1, str2) = parse_file(args.data_file)
 
     result = hamming(str1, str2)
     print(f"{result}")
+
 
 if __name__ == "__main__":
     main()

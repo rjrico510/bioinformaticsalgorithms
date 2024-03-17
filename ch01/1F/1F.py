@@ -1,9 +1,10 @@
-#/usr/bin/env python3
+# /usr/bin/env python3
 """Bioinformatics Algorithms Ch 01 Problem 1F
    Given a genome, find all positions that minimize the skew
 
 """
 import argparse
+
 
 def parse_arguments() -> argparse.Namespace:
     """parse arguments
@@ -17,6 +18,7 @@ def parse_arguments() -> argparse.Namespace:
     parser.add_argument("data_file", help="1 line DNA sequence")
     args = parser.parse_args()
     return args
+
 
 def parse_file(filename: str) -> str:
     """Parse file
@@ -32,6 +34,7 @@ def parse_file(filename: str) -> str:
         dna_sequence = lines[0].strip()
     return dna_sequence
 
+
 def min_skew(sequence: str) -> list:
     """compute the positions of minimum skew  (#G - #C)
 
@@ -46,7 +49,7 @@ def min_skew(sequence: str) -> list:
     skew = [0]
     end = 0
     for i in range(len(sequence)):
-        base = (sequence[i].upper())
+        base = sequence[i].upper()
         if base == "C":
             delta = -1
         elif base == "G":
@@ -61,14 +64,15 @@ def min_skew(sequence: str) -> list:
 
     return result
 
+
 def main():
-    """main
-    """
+    """main"""
     args = parse_arguments()
     sequence = parse_file(args.data_file)
 
     result = min_skew(sequence)
     print(" ".join(str(e) for e in result))
+
 
 if __name__ == "__main__":
     main()

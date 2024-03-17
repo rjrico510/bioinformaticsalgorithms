@@ -1,4 +1,4 @@
-#/usr/bin/env python3
+# /usr/bin/env python3
 """Bioinformatics Algorithms Ch 01 Problem 1E
    Given a genome, and the following parameters:
    k = k-mer size
@@ -10,6 +10,7 @@
 """
 import argparse
 import collections
+
 
 def parse_arguments() -> argparse.Namespace:
     """parse arguments
@@ -23,6 +24,7 @@ def parse_arguments() -> argparse.Namespace:
     parser.add_argument("data_file", help="input - 1st line - genome; 2nd line k L t")
     args = parser.parse_args()
     return args
+
 
 def parse_file(filename: str) -> tuple:
     """Parse file
@@ -40,6 +42,7 @@ def parse_file(filename: str) -> tuple:
         (k, interval_length, min_frequency) = (int(t) for t in tokens)
     return (genome, k, interval_length, min_frequency)
 
+
 def find_min_frequency_kmer(txt: str, k: int, min_freq: int) -> set:
     """find strings of length k (k-mers) appearing at least a min # times
 
@@ -53,14 +56,15 @@ def find_min_frequency_kmer(txt: str, k: int, min_freq: int) -> set:
     """
     kmers = collections.defaultdict(int)
     len_txt = len(txt)
-    for i in range(0,len_txt-k+1):
-        kmers[txt[i:i+k]] += 1
+    for i in range(0, len_txt - k + 1):
+        kmers[txt[i : i + k]] += 1
 
     result = {key for key, value in kmers.items() if value >= min_freq}
     return result
 
+
 def find_clumps(genome: str, k: int, interval_length: int, min_frequency: int) -> set:
-    """Find all distinct k-mers forming (L,t) clumps 
+    """Find all distinct k-mers forming (L,t) clumps
 
     Args:
         genome (str): genome
@@ -74,20 +78,23 @@ def find_clumps(genome: str, k: int, interval_length: int, min_frequency: int) -
 
     result = set()
     for i in range(0, len(genome) - interval_length + 1):
-        this_result = find_min_frequency_kmer(genome[i:i+interval_length], k, min_frequency)
+        this_result = find_min_frequency_kmer(
+            genome[i : i + interval_length], k, min_frequency
+        )
         result.update(this_result)
 
     return result
 
+
 def main():
-    """main
-    """
+    """main"""
     args = parse_arguments()
     (genome, k, interval_length, min_frequency) = parse_file(args.data_file)
 
     result = find_clumps(genome, k, interval_length, min_frequency)
     result = sorted(result)
     print(" ".join(result))
+
 
 if __name__ == "__main__":
     main()

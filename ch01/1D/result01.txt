@@ -1,0 +1,2 @@
+dataset01.txt GATATATGCATATACTT ATAT
+matches: 1 3 9

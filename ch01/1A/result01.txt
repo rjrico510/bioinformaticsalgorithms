@@ -1,0 +1,2 @@
+dataset01.txt GCGCG GCG
+count: 2

@@ -1,9 +1,10 @@
-#/usr/bin/env python3
+# /usr/bin/env python3
 """Bioinformatics Algorithms Ch 01 Problem 1D
    Start positions of all instanced of a pattern in a string (0-based)
 
 """
 import argparse
+
 
 def parse_arguments() -> argparse.Namespace:
     """parse arguments
@@ -14,9 +15,12 @@ def parse_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Given a text string and a pattern, find all start positions for the pattern"
     )
-    parser.add_argument("data_file", help="2-line file - 1st is pattern, 2nd is the text")
+    parser.add_argument(
+        "data_file", help="2-line file - 1st is pattern, 2nd is the text"
+    )
     args = parser.parse_args()
     return args
+
 
 def parse_file(filename: str) -> tuple:
     """Parse file
@@ -33,6 +37,7 @@ def parse_file(filename: str) -> tuple:
         txt = lines[1].strip()
     return (txt, pattern)
 
+
 def pattern_match(txt: str, pattern: str) -> list:
     """start positions of all instances of pattern in txt
 
@@ -43,7 +48,7 @@ def pattern_match(txt: str, pattern: str) -> list:
     Returns:
         list: list of starting positions (int)
     """
-    
+
     starts = []
     pos = 0
     while pos != -1:
@@ -54,15 +59,16 @@ def pattern_match(txt: str, pattern: str) -> list:
 
     return starts
 
+
 def main():
-    """main
-    """
+    """main"""
     args = parse_arguments()
     (txt, pattern) = parse_file(args.data_file)
     print(args.data_file, txt, pattern)
 
     result = pattern_match(txt, pattern)
     print(f"matches: {' '.join(str(e) for e in result)}")
+
 
 if __name__ == "__main__":
     main()

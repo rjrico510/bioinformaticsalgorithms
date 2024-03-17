@@ -1,10 +1,11 @@
-#/usr/bin/env python3
+# /usr/bin/env python3
 """Bioinformatics Algorithms Ch 01 Problem 1C
    DNA reverse complement 
 
 """
 import argparse
 import collections
+
 
 def parse_arguments() -> argparse.Namespace:
     """parse arguments
@@ -18,6 +19,7 @@ def parse_arguments() -> argparse.Namespace:
     parser.add_argument("data_file", help="1 line DNA sequence")
     args = parser.parse_args()
     return args
+
 
 def parse_file(filename: str) -> str:
     """Parse file
@@ -33,6 +35,7 @@ def parse_file(filename: str) -> str:
         dna_sequence = lines[0].strip()
     return dna_sequence
 
+
 def reverse_complement_dna(dna_sequence: str) -> str:
     """compute the reverse complement of a DNA sequence
         Assumes only ATCG in the string
@@ -44,26 +47,22 @@ def reverse_complement_dna(dna_sequence: str) -> str:
         str: reverse complement of dna_sequence (upper case)
     """
 
-    complement_map = {
-        "A": "T",
-        "C": "G",
-        "G": "C", 
-        "T": "A"
-    }
+    complement_map = {"A": "T", "C": "G", "G": "C", "T": "A"}
 
     result = ""
     for base in reversed(dna_sequence.upper()):
-        result = "".join([result, complement_map[base]]) 
+        result = "".join([result, complement_map[base]])
     return result
 
+
 def main():
-    """main
-    """
+    """main"""
     args = parse_arguments()
     dna_sequence = parse_file(args.data_file)
 
     result = reverse_complement_dna(dna_sequence)
     print(result)
+
 
 if __name__ == "__main__":
     main()
