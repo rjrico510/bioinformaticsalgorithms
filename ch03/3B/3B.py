@@ -1,5 +1,5 @@
 # /usr/bin/env python3
-"""Bioinformatics Algorithms Ch 03 Problem 2B
+"""Bioinformatics Algorithms Ch 03 Problem 3B
    String spelled by genome path
 """
 import argparse

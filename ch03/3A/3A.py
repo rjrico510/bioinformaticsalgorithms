@@ -1,5 +1,5 @@
 # /usr/bin/env python3
-"""Bioinformatics Algorithms Ch 03 Problem 2A
+"""Bioinformatics Algorithms Ch 03 Problem 3A
    String composition problem (all k-mers in a string)
 """
 import argparse
