@@ -1,0 +1,12 @@
+AAT -> ATG
+ATG -> TGC,TGG,TGT
+CAT -> ATG
+CCA -> CAT
+GAT -> ATG
+GCC -> CCA
+GGA -> GAT
+GGG -> GGA
+TAA -> AAT
+TGC -> GCC
+TGG -> GGG
+TGT -> GTT

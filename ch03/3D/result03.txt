@@ -1,0 +1,4 @@
+A -> A,T,T,T
+C -> A,C
+G -> A,C,G,G,T
+T -> A,G,G,G,T
