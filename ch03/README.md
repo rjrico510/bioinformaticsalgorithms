@@ -2,4 +2,5 @@
 3B: String spelled by genome path
 3C: Overlap graph (as adjacency list)
 3D: Construct De Bruijn graph of a string
-3E: Cobstruct De Bruijn graph from k-mers
+3E: Construct De Bruijn graph from k-mers
+3F: Find Eulerian Cycle in a a graph
