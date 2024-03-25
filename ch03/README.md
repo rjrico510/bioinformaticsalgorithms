@@ -6,3 +6,4 @@
 3F: Find Eulerian Cycle in a graph
 3G: Find Eulerian path in a graph
 3H: Reconstruct a string from its k-mer composition
+3I: k-universal circular binary string 
