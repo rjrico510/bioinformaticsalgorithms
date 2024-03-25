@@ -144,20 +144,10 @@ def find_eulerian_path(graph: dict) -> list:
     start = start_node
     cycle = [start]
 
+    this_graph = copy.deepcopy(graph)
+    unexplored_in_cycle = []  # nodes in cycle w/ unexplored edges
+
     while True:
-        this_graph = copy.deepcopy(graph)
-        unexplored_in_cycle = []  # nodes in cycle w/ unexplored edges
-
-        # iterate through previous cycle
-        for node in range(0, len(cycle) - 1):
-            current_node = cycle[node]
-            next_node = cycle[node + 1]
-            this_graph[current_node].remove(next_node)
-            unexplored_in_cycle = update_unexplored(
-                unexplored_in_cycle, this_graph, current_node
-            )
-
-        # now iterate through the remainder of the graph
         current_node = cycle[-1]
         while this_graph.get(current_node) is not None:
             cycle.append(this_graph[current_node].pop(0))
