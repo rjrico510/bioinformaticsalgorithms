@@ -28,7 +28,7 @@ def parse_file(filename: str) -> tuple:
     """Parse file
 
     Args:
-        filename (str): file - graph as adjacency list - lines of form i -> j,k,...
+        filename (str): file - line 1 - k-mer length; remaining - list of k-mers
 
     Returns:
        tuple: (k, list of kmers)
