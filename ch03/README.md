@@ -4,3 +4,4 @@
 3D: Construct De Bruijn graph of a string
 3E: Construct De Bruijn graph from k-mers
 3F: Find Eulerian Cycle in a a graph
+3G: Find Eulerian path in a a graph
